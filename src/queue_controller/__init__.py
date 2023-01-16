@@ -24,7 +24,7 @@ except FileNotFoundError:
 def incrementNewLink(filepath, url):
     youtube = pytube.YouTube(url)
     with open(filepath, "a") as file:
-        file.write(f"#{youtube.title}")
+        file.write(f"#{youtube.title} \n")
         file.write(str(url) + "\n")
         file.close()
     messageSystem.sucess_message(f"Adicionado o link: {url} ao arquivo queue_list")
