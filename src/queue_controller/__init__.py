@@ -1,5 +1,6 @@
 import os
 import messageSystem
+import download_link
 
 dirpath = "/tmp/queue/"
 filepath = dirpath + "queue_list.txt"
@@ -30,9 +31,12 @@ def clearQueue(filepath):
         file.write("")
     messageSystem.sucess_message("O arquivo queue_list foi limpo com sucesso")
 
-def downloadQueue(filepath):
+def downloadQueue(filepath, mode):
     with open(filepath, "r") as file:
         bigtext = file.read()
         for url in bigtext.splitlines():
-            messageSystem.alert_message(f"o link: {url}, foi lido com sucesso")
+            if mode == "video":
+                download_link.download_video(url)
+            if mode == "audio":
+                download_link.download_audio(url)
     clearQueue(filepath)
