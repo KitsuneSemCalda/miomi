@@ -1,4 +1,5 @@
 import os
+import pytube
 import messageSystem
 import download_link
 
@@ -21,7 +22,9 @@ except FileNotFoundError:
     pass
 
 def incrementNewLink(filepath, url):
+    youtube = pytube.YouTube(url)
     with open(filepath, "a") as file:
+        file.write(f"#{youtube.title}")
         file.write(str(url) + "\n")
         file.close()
     messageSystem.sucess_message(f"Adicionado o link: {url} ao arquivo queue_list")
@@ -35,8 +38,11 @@ def downloadQueue(filepath, mode):
     with open(filepath, "r") as file:
         bigtext = file.read()
         for url in bigtext.splitlines():
-            if mode == "video":
-                download_link.download_video(url)
-            if mode == "audio":
-                download_link.download_audio(url)
+            if str(url).startswith("#"):
+                pass
+            else:
+                if mode == "video":
+                    download_link.download_video(url)
+                if mode == "audio":
+                    download_link.download_audio(url)
     clearQueue(filepath)
