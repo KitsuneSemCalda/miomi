@@ -17,8 +17,12 @@ def setup_args():
     add_queue.add_argument("url")
 
     subparse.add_parser("clearqueue", description="subcommand to clean a queue file")
+    subparse.add_parser("seequeue", description="subcommand to see a queue file")
+
     download_queue = subparse.add_parser("downloadqueue", description="subcommand to download links in queue")
     download_queue.add_argument("mode", type=str, default="audio")
+    
+
     return parse.parse_args()
 
 def main():
