@@ -29,7 +29,8 @@ def main():
         queue_controller.clearQueue(queue_controller.filepath)
     if args.subcommand == "downloadqueue":
             queue_controller.downloadQueue(queue_controller.filepath, args.mode)
-
+    if args.subcommand == "seequeue":
+            queue_controller.readQueue(queue_controller.filepath)
 
 if __name__ == "__main__":
     main()
