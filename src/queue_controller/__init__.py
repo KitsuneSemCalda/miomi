@@ -22,11 +22,18 @@ except FileNotFoundError:
     pass
 
 def incrementNewLink(filepath, url):
-    youtube = pytube.YouTube(url)
-    with open(filepath, "a") as file:
-        file.write(f"#{youtube.title} \n")
-        file.write(str(url) + "\n")
-        file.close()
+    try:
+        youtube = pytube.YouTube(url)
+        with open(filepath, "a") as file:
+            file.write(f"#{youtube.title} \n")
+            file.write(str(url) + "\n")
+            file.close()
+    except Exception:
+        playlist = pytube.Playlist(url)
+        with open(filepath, "a") as file:
+            file.write(f"#{playlist.title} \n")
+            file.write(str(url) + "\n")
+            file.close()
     messageSystem.sucess_message(f"Adicionado o link: {url} ao arquivo queue_list")
 
 def clearQueue(filepath):
