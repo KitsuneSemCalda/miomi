@@ -15,7 +15,9 @@ def setup_args():
     add_queue.add_argument("url")
 
     subparse.add_parser("clearqueue", description="subcommand to clean a queue file")
-    subparse.add_parser("downloadqueue", description="subcommand to download links in queue")
+    download_queue = subparse.add_parser("downloadqueue", description="subcommand to download links in queue")
+    download_queue.add_argument("video")
+    download_queue.add_argument("audio")
     return parse.parse_args()
 
 def main():
@@ -25,7 +27,11 @@ def main():
     if args.subcommand == "clearqueue":
         queue_controller.clearQueue(queue_controller.filepath)
     if args.subcommand == "downloadqueue":
-        queue_controller.downloadQueue(queue_controller.filepath)
+        if args.video:
+            queue_controller.downloadQueue(queue_controller.filepath, "video")
+        if args.audio:
+            queue_controller.downloadQueue(queue_controller.filepath, "audio")
+
 
 if __name__ == "__main__":
     main()
