@@ -50,6 +50,6 @@ def downloadQueue(filepath, mode):
 def readQueue(filepath):
     with open(filepath, "r") as file:
         bigtext = file.read()
-        for text in bigtext.split():
+        for text in bigtext.splitlines():
             print(text)
             
