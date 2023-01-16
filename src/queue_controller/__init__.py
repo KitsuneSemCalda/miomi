@@ -46,3 +46,10 @@ def downloadQueue(filepath, mode):
                 if mode == "audio":
                     download_link.download_audio(url)
     clearQueue(filepath)
+
+def readQueue(filepath):
+    with open(filepath, "r") as file:
+        bigtext = file.read()
+        for text in bigtext.split():
+            print(text)
+            
