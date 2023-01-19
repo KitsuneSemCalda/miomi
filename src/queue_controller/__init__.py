@@ -2,6 +2,11 @@ import os
 import pytube
 import messageSystem
 import download_link
+import shutil
+
+home = os.getenv("HOME")
+
+docpath = str(home) + "/Documentos/"
 
 dirpath = "/tmp/queue/"
 filepath = dirpath + "queue_list.txt"
@@ -54,9 +59,17 @@ def downloadQueue(filepath, mode):
                     download_link.download_audio(url)
     clearQueue(filepath)
 
+def download(url, mode):
+    if mode == "video":
+        download_link.download_video(url)
+    if mode == "audio":
+        download_link.download_audio(url)
+ 
 def readQueue(filepath):
     with open(filepath, "r") as file:
         bigtext = file.read()
         for text in bigtext.splitlines():
             print(text)
-            
+ 
+def persistent():
+    shutil.copy(filepath, docpath)
