@@ -24,7 +24,7 @@ def setup_args():
     download_queue = subparse.add_parser("downloadqueue", description="subcommand to download links in queue")
     download_queue.add_argument("mode", type=str, default="audio")
     
-    download = subparse.add_parser("download", description="subcommand to download links in queue")
+    download = subparse.add_parser("download", description="subcommand to direct download links")
     download.add_argument("url")
     download.add_argument("mode", type=str, default="audio")
 
