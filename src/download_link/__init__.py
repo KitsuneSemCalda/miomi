@@ -1,9 +1,17 @@
 import pytube
+import pytube.exceptions
 import messageSystem
 import os
 
 music_path = str(os.getenv("HOME")) + "/Música/"
 video_path = str(os.getenv("HOME")) + "/Vídeos/"
+
+def is_playlist(url):
+    try:
+        pytube.YouTube(url)
+        return False
+    except pytube.exceptions.RegexMatchError:
+        return True
 
 def download_video_in_format_audio(url):
     youtube = pytube.YouTube(url)
@@ -50,13 +58,13 @@ def download_playlist_in_highest_resolution(url):
     messageSystem.sucess_message(f"Esta playlist foi baixada com sucesso na maior resolução")
 
 def download_audio(url):
-    try:
+    if not is_playlist(url):
         download_video_in_format_audio(url)
-    except Exception:
+    else:
         download_playlist_in_format_audio(url)
 
 def download_video(url):
-    try:
+    if not is_playlist(url):
         download_video_in_highest_resolution(url)
-    except Exception:
+    else:
         download_playlist_in_highest_resolution(url)
