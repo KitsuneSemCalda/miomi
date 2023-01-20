@@ -46,7 +46,10 @@ def download_playlist_in_format_audio(url):
             print(f"baixando o vídeo: {audio.title}")
         except KeyError:
             pass
-        audio.streams.get_audio_only().download(playlist_location)
+        try:
+            audio.streams.get_audio_only().download(playlist_location)
+        except Exception:
+            pass
     messageSystem.sucess_message(f"Esta playlist foi baixada com sucesso no formato audio")
 
 def download_playlist_in_highest_resolution(url):
@@ -62,7 +65,10 @@ def download_playlist_in_highest_resolution(url):
             print(f"baixando o vídeo: {video.title}")
         except KeyError:
             pass
-        video.streams.get_highest_resolution().download(playlist_location)
+        try:
+            video.streams.get_highest_resolution().download(playlist_location)
+        except Exception:
+            pass
     messageSystem.sucess_message(f"Esta playlist foi baixada com sucesso na maior resolução")
 
 def download_audio(url):
