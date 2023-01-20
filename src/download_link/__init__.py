@@ -46,6 +46,8 @@ def download_playlist_in_format_audio(url):
             print(f"baixando o vídeo: {audio.title}")
         except KeyError:
             pass
+        except pytube.exceptions.PytubeError:
+            pass
         try:
             audio.streams.get_audio_only().download(playlist_location)
         except Exception:
@@ -64,6 +66,8 @@ def download_playlist_in_highest_resolution(url):
         try:
             print(f"baixando o vídeo: {video.title}")
         except KeyError:
+            pass
+        except pytube.exceptions.PytubeError:
             pass
         try:
             video.streams.get_highest_resolution().download(playlist_location)
