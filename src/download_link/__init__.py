@@ -47,13 +47,14 @@ def download_playlist_in_format_audio(url):
 
 def download_playlist_in_highest_resolution(url):
     youtube = pytube.Playlist(url)
-    
+
     playlist_location = video_path + youtube.title
 
     title = youtube.title
     messageSystem.alert_message(f"Estamos baixando uma playlist inteira: {title} na maior resolução")
 
     for video in youtube.videos:
+        print(f"baixando o vídeo: {video.title}")
         video.streams.get_highest_resolution().download(playlist_location)
     messageSystem.sucess_message(f"Esta playlist foi baixada com sucesso na maior resolução")
 
