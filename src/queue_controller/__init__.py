@@ -27,13 +27,13 @@ except FileNotFoundError:
     pass
 
 def incrementNewLink(filepath, url):
-    try:
+    if not download_link.is_playlist(url):
         youtube = pytube.YouTube(url)
         with open(filepath, "a") as file:
             file.write(f"#{youtube.title} \n")
             file.write(str(url) + "\n")
             file.close()
-    except Exception:
+    else:
         playlist = pytube.Playlist(url)
         with open(filepath, "a") as file:
             file.write(f"#{playlist.title} \n")
@@ -47,17 +47,20 @@ def clearQueue(filepath):
     messageSystem.sucess_message("O arquivo queue_list foi limpo com sucesso")
 
 def downloadQueue(filepath, mode):
-    with open(filepath, "r") as file:
-        bigtext = file.read()
-        for url in bigtext.splitlines():
-            if str(url).startswith("#"):
-                pass
-            else:
-                if mode == "video":
-                    download_link.download_video(url)
-                if mode == "audio":
-                    download_link.download_audio(url)
-    clearQueue(filepath)
+    try:
+        with open(filepath, "r") as file:
+            bigtext = file.read()
+            for url in bigtext.splitlines():
+                if str(url).startswith("#"):
+                    pass
+                else:
+                    if mode == "video":
+                        download_link.download_video(url)
+                    if mode == "audio":
+                        download_link.download_audio(url)
+        clearQueue(filepath)
+    except FileNotFoundError:
+        messageSystem.warning_message("Não há nenhum queue_list para ser lido")
 
 def download(url, mode):
     if mode == "video":
@@ -66,10 +69,13 @@ def download(url, mode):
         download_link.download_audio(url)
  
 def readQueue(filepath):
-    with open(filepath, "r") as file:
-        bigtext = file.read()
-        for text in bigtext.splitlines():
-            print(text)
- 
+    try:
+        with open(filepath, "r") as file:
+            bigtext = file.read()
+            for text in bigtext.splitlines():
+                print(text)
+    except FileNotFoundError:
+        messageSystem.warning_message("não existe nenhum queue_list.txt para ser usado")
+
 def persistent():
     shutil.copy(filepath, docpath)
