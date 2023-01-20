@@ -42,6 +42,7 @@ def download_playlist_in_format_audio(url):
     messageSystem.alert_message(f"Estamos baixando uma playlist inteira: {title} em formato audio")
 
     for audio in youtube.videos:
+        print(f"baixando o vídeo: {audio.title}")
         audio.streams.get_audio_only().download(playlist_location)
     messageSystem.sucess_message(f"Esta playlist foi baixada com sucesso no formato audio")
 
