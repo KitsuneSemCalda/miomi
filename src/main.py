@@ -11,22 +11,34 @@ def setup_args():
         epilog="Developed from KitsuneSemCalda",
         usage="%(prog)s [OPTIONS]:",
         )
-    subparse = parse.add_subparsers(title="subcommands", description="subcommands for miomi", dest="subcommand")
+    subparse = parse.add_subparsers(
+            title="subcommands", 
+            description="subcommands for miomi", 
+            dest="subcommand")
     
-    add_queue = subparse.add_parser("add", description="subcommand to add a new url to queue")
-    add_queue.add_argument("url")
+    add_queue = subparse.add_parser(
+            "add", 
+            description="add a new youtube url to the download queue")
 
-    subparse.add_parser("clear", description="subcommand to clean a queue file")
-    subparse.add_parser("see", description="subcommand to see a queue file")
+    add_queue.add_argument("url", help="The URL of the video or playlist to add the queue")
+
+    subparse.add_parser(
+            "clear", 
+            description="Clears the download queue")
+    
+    subparse.add_parser("see", 
+                        description="See the current download queue")
     
     subparse.add_parser("persistent", description="save list of url in Documents folder")
 
-    download_queue = subparse.add_parser("downloadqueue", description="subcommand to download links in queue")
-    download_queue.add_argument("mode", type=str, default="audio")
+    download_queue = subparse.add_parser("downloadqueue", 
+                                         description="download all itens in the queue")
     
-    download = subparse.add_parser("download", description="subcommand to direct download links")
-    download.add_argument("url")
-    download.add_argument("mode", type=str, default="audio")
+    download_queue.add_argument("mode", type=str, default="audio", help="The download mode, either 'audio' or 'video'")
+    
+    download = subparse.add_parser("download", description="Directly download a Youtube video or playlist")
+    download.add_argument("url", help="The url of the youtube video or playlist to download")
+    download.add_argument("mode", type=str, default="audio", help="The download mode, either 'audio' or 'video'")
 
 
     return parse.parse_args()
