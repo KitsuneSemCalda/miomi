@@ -27,19 +27,22 @@ except FileNotFoundError:
     pass
 
 def incrementNewLink(filepath, url):
-    if not downloader.is_playlist(url):
-        youtube = pytube.YouTube(url)
-        with open(filepath, "a") as file:
-            file.write(f"#{youtube.title} \n")
-            file.write(str(url) + "\n")
-            file.close()
-    else:
-        playlist = pytube.Playlist(url)
-        with open(filepath, "a") as file:
-            file.write(f"#{playlist.title} \n")
-            file.write(str(url) + "\n")
-            file.close()
+    try:
+        if not downloader.is_playlist(url):
+            youtube = pytube.YouTube(url)
+            with open(filepath, "a") as file:
+                file.write(f"#{youtube.title} \n")
+                file.write(str(url) + "\n")
+                file.close()
+        else:
+            playlist = pytube.Playlist(url)
+            with open(filepath, "a") as file:
+                file.write(f"#{playlist.title} \n")
+                file.write(str(url) + "\n")
+                file.close()
         alerts.sucess_message(f"Adicionado o link: {url} ao arquivo queue_list")
+    except KeyError:
+        pass
 
 def clearQueue(filepath):
     with open(filepath, "w") as file:
@@ -70,10 +73,12 @@ def download(url, mode):
  
 def readQueue(filepath):
     try:
+        print("="*60 + "\n")
         with open(filepath, "r") as file:
             bigtext = file.read()
             for text in bigtext.splitlines():
                 print(text)
+        print("="*60 + "\n") 
     except FileNotFoundError:
         alerts.warning_message("não existe nenhum queue_list.txt para ser usado")
 
