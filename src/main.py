@@ -44,18 +44,21 @@ def setup_args():
 
 def main():
     args = setup_args()
-    if args.subcommand == "add":
-        queuefile.incrementNewLink(queuefile.filepath, args.url)
-    if args.subcommand == "clear":
-        queuefile.clearQueue(queuefile.filepath)
-    if args.subcommand == "downloadqueue":
-        queuefile.downloadQueue(queuefile.filepath, args.mode)
-    if args.subcommand == "download":
-        queuefile.download(args.url, args.mode)
-    if args.subcommand == "see":
-        queuefile.readQueue(queuefile.filepath)
-    if args.subcommand == "persistent":
-        queuefile.persistent()
+    try:
+        if args.subcommand == "add":
+            queuefile.incrementNewLink(queuefile.filepath, args.url)
+        if args.subcommand == "clear":
+            queuefile.clearQueue(queuefile.filepath)
+        if args.subcommand == "downloadqueue":
+            queuefile.downloadQueue(queuefile.filepath, args.mode)
+        if args.subcommand == "download":
+            queuefile.download(args.url, args.mode)
+        if args.subcommand == "see":
+            queuefile.readQueue(queuefile.filepath)
+        if args.subcommand == "persistent":
+            queuefile.persistent()
+    except argparse.ArgumentError:
+        pass
     
 
 if __name__ == "__main__":
