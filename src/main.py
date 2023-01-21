@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-import queue_controller
+import queuefile
 
 
 def setup_args():
@@ -40,23 +40,22 @@ def setup_args():
     download.add_argument("url", help="The url of the youtube video or playlist to download")
     download.add_argument("mode", type=str, default="audio", help="The download mode, either 'audio' or 'video'")
 
-
     return parse.parse_args()
 
 def main():
     args = setup_args()
     if args.subcommand == "add":
-        queue_controller.incrementNewLink(queue_controller.filepath, args.url)
+        queuefile.incrementNewLink(queuefile.filepath, args.url)
     if args.subcommand == "clear":
-        queue_controller.clearQueue(queue_controller.filepath)
+        queuefile.clearQueue(queuefile.filepath)
     if args.subcommand == "downloadqueue":
-        queue_controller.downloadQueue(queue_controller.filepath, args.mode)
+        queuefile.downloadQueue(queuefile.filepath, args.mode)
     if args.subcommand == "download":
-        queue_controller.download(args.url, args.mode)
+        queuefile.download(args.url, args.mode)
     if args.subcommand == "see":
-        queue_controller.readQueue(queue_controller.filepath)
+        queuefile.readQueue(queuefile.filepath)
     if args.subcommand == "persistent":
-        queue_controller.persistent()
+        queuefile.persistent()
     
 
 if __name__ == "__main__":
