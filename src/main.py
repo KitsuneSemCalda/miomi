@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
+
+from video.downloader import download_video
 
 def setup_args():
     parse = argparse.ArgumentParser(
@@ -48,5 +51,14 @@ def setup_args():
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.WARNING)
+    formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+    file_handler = logging.FileHandler('download.log')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
     args = setup_args().parse_args()
+    if args.video:
+        download_video(args.video, args.resolution)
     pass
